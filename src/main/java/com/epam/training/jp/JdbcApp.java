@@ -1,10 +1,13 @@
 package com.epam.training.jp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.epam.training.jp.jdbc.excercises.domain.Address;
+import com.epam.training.jp.jdbc.excercises.domain.Food;
 import com.epam.training.jp.jdbc.excercises.helper.DatabaseCreator;
 import com.epam.training.jp.jdbc.excercises.service.RestaurantService;
 import com.epam.training.jp.jdbc.excercises.spring.SpringConfigurationDataSource;
@@ -49,6 +52,18 @@ public class JdbcApp {
 		System.out.println("Restaurants: " + restaurantService.getAllRestaurantsWithAddress());
 		
 		restaurantService.removeMenu(1);		
+		
+		List<Food> foods = new ArrayList<>();
+		foods.add(new Food().setCalories(1200).setPrice(120).setName("Finom").setVegan(false));
+		foods.add(new Food().setCalories(1300).setPrice(100).setName("Nem finom").setVegan(false));
+		foods.add(new Food().setCalories(1400).setPrice(190).setName("Nagyon Finom").setVegan(true));
+		restaurantService.save(foods);
+		
+		foods = restaurantService.getAllFoods();
+		System.out.println("foodlist:");
+		for(Food food: foods) {
+			System.out.println("ID: " + food.getId() + " Calories: " + food.getCalories() + " name: " + food.getName() + " price: " + food.getPrice());
+		}
 		
 		context.close();
 		

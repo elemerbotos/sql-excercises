@@ -14,40 +14,45 @@ public class Food {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public Food setPrice(int price) {
 		this.price = price;
+		return this;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public Food setId(int id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public Food setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public int getCalories() {
 		return calories;
 	}
 
-	public void setCalories(int calories) {
+	public Food setCalories(int calories) {
 		this.calories = calories;
+		return this;
 	}
 
 	public boolean isVegan() {
 		return isVegan;
 	}
 
-	public void setVegan(boolean isVegan) {
+	public Food setVegan(boolean isVegan) {
 		this.isVegan = isVegan;
+		return this;
 	}
 
 	@Override

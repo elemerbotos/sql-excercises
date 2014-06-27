@@ -12,4 +12,6 @@ public interface FoodDao {
 	void updateFoodPriceByName(String name, int newPrice);	
 
 	void save(List<Food> foods);
+
+	List<Food> getAllFoods();
 }
