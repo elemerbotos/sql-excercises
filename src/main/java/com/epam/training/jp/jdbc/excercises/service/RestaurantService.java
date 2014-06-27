@@ -63,6 +63,11 @@ public class RestaurantService {
 	public void save(List<Food> foods) {
 		foodDao.save(foods);
 	}
+
+
+	public List<Food> getAllFoods() {
+		return foodDao.getAllFoods();
+	}
 	
 	
 	

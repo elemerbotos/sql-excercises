@@ -2,21 +2,29 @@ package com.epam.training.jp.jdbc.excercises.dao.jdbctemplateimpl;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.epam.training.jp.jdbc.excercises.dao.AddressDao;
 import com.epam.training.jp.jdbc.excercises.domain.Address;
 
-public class JdbcTemplateAddressDao extends JdbcDaoSupport implements AddressDao {
+public class JdbcTemplateAddressDao extends JdbcDaoSupport implements
+		AddressDao {
 
-	public JdbcTemplateAddressDao(DataSource dataSource) {		
+	private SimpleJdbcInsert insertAddress;
+	
+	public JdbcTemplateAddressDao(DataSource dataSource) {
 		setDataSource(dataSource);
+		insertAddress = new SimpleJdbcInsert(dataSource).withTableName("ADDRESS").usingGeneratedKeyColumns("ID");
 	}
 
 	@Override
 	public void save(Address address) {
-		//TODO: implement, use NamedParameterJdbcTemplate
-		throw new UnsupportedOperationException();
+		SqlParameterSource source = new BeanPropertySqlParameterSource(address);
+		Number newID = insertAddress.executeAndReturnKey(source);
+		address.setId(newID.intValue());
 	}
 
 }
