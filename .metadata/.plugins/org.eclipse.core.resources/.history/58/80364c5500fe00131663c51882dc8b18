@@ -1,0 +1,34 @@
+package com.epam.training.jp.jdbc.excercises.dao.jdbctemplateimpl;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import com.epam.training.jp.jdbc.excercises.dao.AddressDao;
+import com.epam.training.jp.jdbc.excercises.domain.Address;
+
+public class JdbcTemplateAddressDao extends JdbcDaoSupport implements
+		AddressDao {
+
+	public JdbcTemplateAddressDao(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
+
+	@Override
+	public void save(Address address) {
+		String sql = "INSERT INTO ADDRESS "
+				+ " (CITY, COUNTRY, STREET, ZIPCODE) " + " VALUES (?, ?, ?, ?)";
+		this.getJdbcTemplate().update(
+				sql,
+				new Object[] { address.getCity(), address.getCountry(),
+						address.getStreet(), address.getZipCode() });
+		sql = "SELECT ID FROM ADDRESS WHERE "
+				+ " CITY = ? AND COUNTRY = ? AND STREET = ? AND ZIPCODE = ?; ";
+		address.setId(this.getJdbcTemplate().queryForObject(
+				sql,
+				new Object[] { address.getCity(), address.getCountry(),
+						address.getStreet(), address.getZipCode() },
+				Integer.class));
+	}
+
+}

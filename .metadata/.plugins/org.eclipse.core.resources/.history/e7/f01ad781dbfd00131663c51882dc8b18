@@ -1,0 +1,52 @@
+package com.epam.training.jp.jdbc.excercises.dao.jdbctemplateimpl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import com.epam.training.jp.jdbc.excercises.dao.FoodDao;
+import com.epam.training.jp.jdbc.excercises.domain.Food;
+
+public class JdbcTemplateFoodDao extends JdbcDaoSupport implements FoodDao {
+
+	public JdbcTemplateFoodDao(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
+
+	@Override
+	public Food findFoodByName(String name) {
+		return this.getJdbcTemplate().query(sql, name, 
+				new RowMapper<Food>() {
+					@Override
+					public Food mapRow(ResultSet arg0, int arg1) throws SQLException {
+						Food food = new Food();
+						food.setCalories(arg0.getInt("CALORIES"));
+						food.setId(arg0.getInt("ID"));
+						food.setName(arg0.getString("NAME"));
+						food.setPrice(arg0.getInt("PRICE"));
+						food.setVegan(arg0.getBoolean("ISVEGAN"));
+						return food;
+					}
+		});
+	}
+
+	@Override
+	public void updateFoodPriceByName(String name, int newPrice) {
+		//TODO: implement
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void save(List<Food> foods) {
+		//TODO: implement with batch
+		throw new UnsupportedOperationException();
+		
+	}
+
+	
+}
